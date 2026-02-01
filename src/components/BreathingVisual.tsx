@@ -8,21 +8,12 @@ interface BreathingVisualProps {
 }
 
 const BREATH_COLORS = [
-  "hsl(200, 60%, 45%)",   // Ocean blue
-  "hsl(170, 50%, 50%)",   // Teal
-  "hsl(280, 40%, 55%)",   // Lavender
-  "hsl(340, 45%, 55%)",   // Soft rose
-  "hsl(30, 55%, 55%)",    // Warm coral
-  "hsl(150, 40%, 45%)",   // Sage green
-];
-
-const BG_COLORS = [
-  "linear-gradient(180deg, hsl(220, 35%, 12%) 0%, hsl(200, 40%, 15%) 100%)",
-  "linear-gradient(180deg, hsl(200, 40%, 15%) 0%, hsl(170, 35%, 12%) 100%)",
-  "linear-gradient(180deg, hsl(170, 35%, 12%) 0%, hsl(280, 30%, 15%) 100%)",
-  "linear-gradient(180deg, hsl(280, 30%, 15%) 0%, hsl(340, 30%, 12%) 100%)",
-  "linear-gradient(180deg, hsl(340, 30%, 12%) 0%, hsl(30, 35%, 12%) 100%)",
-  "linear-gradient(180deg, hsl(30, 35%, 12%) 0%, hsl(150, 30%, 12%) 100%)",
+  "hsl(200, 60%, 50%)",   // Ocean blue
+  "hsl(165, 55%, 45%)",   // Teal
+  "hsl(270, 45%, 55%)",   // Lavender
+  "hsl(345, 50%, 55%)",   // Soft rose
+  "hsl(25, 60%, 55%)",    // Warm coral
+  "hsl(145, 45%, 45%)",   // Sage green
 ];
 
 export const BreathingVisual = ({
@@ -34,7 +25,9 @@ export const BreathingVisual = ({
   const [phase, setPhase] = useState<"inhale" | "exhale">("inhale");
   const [colorIndex, setColorIndex] = useState(0);
   const [fillPercent, setFillPercent] = useState(0);
-  const [nextColorIndex, setNextColorIndex] = useState(1);
+
+  const currentColor = BREATH_COLORS[colorIndex];
+  const nextColor = BREATH_COLORS[(colorIndex + 1) % BREATH_COLORS.length];
 
   useEffect(() => {
     if (!isActive) {
@@ -58,15 +51,12 @@ export const BreathingVisual = ({
       }
 
       if (progress >= 1) {
-        // Phase complete
         if (phase === "inhale") {
           setPhase("exhale");
-          // Prepare next color for when exhale completes
-          setNextColorIndex((colorIndex + 1) % BREATH_COLORS.length);
           onPhaseChange?.("exhale");
         } else {
           // Exhale complete - cycle to next color
-          setColorIndex(nextColorIndex);
+          setColorIndex((prev) => (prev + 1) % BREATH_COLORS.length);
           setPhase("inhale");
           onPhaseChange?.("inhale");
         }
@@ -80,35 +70,36 @@ export const BreathingVisual = ({
     onPhaseChange?.(phase);
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [isActive, phase, inhaleTime, exhaleTime, colorIndex, nextColorIndex, onPhaseChange]);
+  }, [isActive, phase, inhaleTime, exhaleTime, onPhaseChange]);
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Background - next color revealed on exhale */}
+      {/* Background - the NEXT color, revealed as exhale drains the fill */}
       <div
-        className="absolute inset-0 transition-all duration-1000"
+        className="absolute inset-0"
         style={{
-          background: BG_COLORS[nextColorIndex],
+          backgroundColor: nextColor,
         }}
       />
 
-      {/* Foreground fill - the breathing layer */}
+      {/* Foreground fill - current color that fills up on inhale, drains on exhale */}
       <div
-        className="absolute inset-x-0 bottom-0 transition-none"
+        className="absolute inset-x-0 bottom-0"
         style={{
           height: `${fillPercent}%`,
-          background: BREATH_COLORS[colorIndex],
-          boxShadow: `0 -20px 60px ${BREATH_COLORS[colorIndex]}40`,
+          backgroundColor: currentColor,
+          transition: "height 16ms linear",
         }}
       />
 
-      {/* Soft glow at the edge */}
+      {/* Soft glowing edge at the transition line */}
       <div
-        className="absolute inset-x-0 h-32 pointer-events-none transition-none"
+        className="absolute inset-x-0 h-24 pointer-events-none"
         style={{
-          bottom: `calc(${fillPercent}% - 4rem)`,
-          background: `linear-gradient(to top, ${BREATH_COLORS[colorIndex]}60, transparent)`,
-          filter: "blur(20px)",
+          bottom: `calc(${fillPercent}% - 3rem)`,
+          background: `linear-gradient(to top, ${currentColor}, transparent)`,
+          filter: "blur(16px)",
+          opacity: 0.7,
         }}
       />
     </div>
