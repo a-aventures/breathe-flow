@@ -6,7 +6,7 @@ interface BreathingVisualProps {
   exhaleTime: number;
   holdAfterInhale: number;
   holdAfterExhale: number;
-  onPhaseChange?: (phase: "inhale" | "exhale" | "hold") => void;
+  onPhaseChange?: (phase: "inhale" | "exhale" | "hold", holdDuration?: number) => void;
 }
 
 const BREATH_GRADIENTS = [
@@ -86,13 +86,15 @@ export const BreathingVisual = ({
 
         setPhase(nextPhase);
         
-        // Notify parent with simplified phase
+        // Notify parent with simplified phase and hold duration
         if (nextPhase === "inhale") {
           onPhaseChange?.("inhale");
         } else if (nextPhase === "exhale") {
           onPhaseChange?.("exhale");
-        } else {
-          onPhaseChange?.("hold");
+        } else if (nextPhase === "holdIn") {
+          onPhaseChange?.("hold", holdAfterInhale);
+        } else if (nextPhase === "holdOut") {
+          onPhaseChange?.("hold", holdAfterExhale);
         }
         
         startTime = Date.now();
@@ -104,10 +106,14 @@ export const BreathingVisual = ({
     animationFrame = requestAnimationFrame(animate);
     
     // Initial phase notification
-    if (phase === "inhale" || phase === "exhale") {
-      onPhaseChange?.(phase);
-    } else {
-      onPhaseChange?.("hold");
+    if (phase === "inhale") {
+      onPhaseChange?.("inhale");
+    } else if (phase === "exhale") {
+      onPhaseChange?.("exhale");
+    } else if (phase === "holdIn") {
+      onPhaseChange?.("hold", holdAfterInhale);
+    } else if (phase === "holdOut") {
+      onPhaseChange?.("hold", holdAfterExhale);
     }
 
     return () => cancelAnimationFrame(animationFrame);
