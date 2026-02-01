@@ -7,13 +7,13 @@ interface BreathingVisualProps {
   onPhaseChange?: (phase: "inhale" | "exhale" | "hold") => void;
 }
 
-const BREATH_COLORS = [
-  "hsl(200, 60%, 50%)",   // Ocean blue
-  "hsl(165, 55%, 45%)",   // Teal
-  "hsl(270, 45%, 55%)",   // Lavender
-  "hsl(345, 50%, 55%)",   // Soft rose
-  "hsl(25, 60%, 55%)",    // Warm coral
-  "hsl(145, 45%, 45%)",   // Sage green
+const BREATH_GRADIENTS = [
+  "linear-gradient(180deg, hsl(200, 60%, 55%) 0%, hsl(220, 50%, 35%) 100%)",   // Ocean depths
+  "linear-gradient(180deg, hsl(165, 55%, 50%) 0%, hsl(185, 45%, 30%) 100%)",   // Teal waters
+  "linear-gradient(180deg, hsl(270, 45%, 60%) 0%, hsl(290, 35%, 35%) 100%)",   // Lavender dusk
+  "linear-gradient(180deg, hsl(345, 50%, 60%) 0%, hsl(320, 40%, 35%) 100%)",   // Soft rose
+  "linear-gradient(180deg, hsl(25, 60%, 60%) 0%, hsl(10, 50%, 35%) 100%)",     // Warm sunset
+  "linear-gradient(180deg, hsl(145, 45%, 50%) 0%, hsl(160, 35%, 28%) 100%)",   // Forest depths
 ];
 
 export const BreathingVisual = ({
@@ -26,8 +26,8 @@ export const BreathingVisual = ({
   const [colorIndex, setColorIndex] = useState(0);
   const [fillPercent, setFillPercent] = useState(0);
 
-  const currentColor = BREATH_COLORS[colorIndex];
-  const nextColor = BREATH_COLORS[(colorIndex + 1) % BREATH_COLORS.length];
+  const currentGradient = BREATH_GRADIENTS[colorIndex];
+  const nextGradient = BREATH_GRADIENTS[(colorIndex + 1) % BREATH_GRADIENTS.length];
 
   useEffect(() => {
     if (!isActive) {
@@ -56,7 +56,7 @@ export const BreathingVisual = ({
           onPhaseChange?.("exhale");
         } else {
           // Exhale complete - cycle to next color
-          setColorIndex((prev) => (prev + 1) % BREATH_COLORS.length);
+          setColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
           setPhase("inhale");
           onPhaseChange?.("inhale");
         }
@@ -74,31 +74,31 @@ export const BreathingVisual = ({
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">
-      {/* Background - the NEXT color, revealed as exhale drains the fill */}
+      {/* Background - the NEXT gradient, revealed as exhale drains the fill */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          backgroundColor: nextColor,
+          background: nextGradient,
         }}
       />
 
-      {/* Foreground fill - current color that fills from bottom to top on inhale */}
+      {/* Foreground fill - current gradient that fills from bottom to top on inhale */}
       <div
         className="absolute left-0 right-0 bottom-0 w-full"
         style={{
           height: `${fillPercent}%`,
-          backgroundColor: currentColor,
+          background: currentGradient,
         }}
       />
 
       {/* Soft glowing edge at the transition line */}
       <div
-        className="absolute left-0 right-0 h-32 pointer-events-none"
+        className="absolute left-0 right-0 h-40 pointer-events-none"
         style={{
-          bottom: `calc(${fillPercent}% - 4rem)`,
-          background: `linear-gradient(to top, ${currentColor}, transparent)`,
-          filter: "blur(20px)",
-          opacity: 0.8,
+          bottom: `calc(${fillPercent}% - 5rem)`,
+          background: `linear-gradient(to top, hsla(0, 0%, 100%, 0.08), transparent)`,
+          filter: "blur(24px)",
+          opacity: 0.6,
         }}
       />
     </div>
