@@ -73,33 +73,32 @@ export const BreathingVisual = ({
   }, [isActive, phase, inhaleTime, exhaleTime, onPhaseChange]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="fixed inset-0 w-full h-full overflow-hidden">
       {/* Background - the NEXT color, revealed as exhale drains the fill */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 w-full h-full"
         style={{
           backgroundColor: nextColor,
         }}
       />
 
-      {/* Foreground fill - current color that fills up on inhale, drains on exhale */}
+      {/* Foreground fill - current color that fills from bottom to top on inhale */}
       <div
-        className="absolute inset-x-0 bottom-0"
+        className="absolute left-0 right-0 bottom-0 w-full"
         style={{
           height: `${fillPercent}%`,
           backgroundColor: currentColor,
-          transition: "height 16ms linear",
         }}
       />
 
       {/* Soft glowing edge at the transition line */}
       <div
-        className="absolute inset-x-0 h-24 pointer-events-none"
+        className="absolute left-0 right-0 h-32 pointer-events-none"
         style={{
-          bottom: `calc(${fillPercent}% - 3rem)`,
+          bottom: `calc(${fillPercent}% - 4rem)`,
           background: `linear-gradient(to top, ${currentColor}, transparent)`,
-          filter: "blur(16px)",
-          opacity: 0.7,
+          filter: "blur(20px)",
+          opacity: 0.8,
         }}
       />
     </div>
