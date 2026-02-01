@@ -4,6 +4,8 @@ interface BreathingVisualProps {
   isActive: boolean;
   inhaleTime: number;
   exhaleTime: number;
+  holdAfterInhale: number;
+  holdAfterExhale: number;
   onPhaseChange?: (phase: "inhale" | "exhale" | "hold") => void;
 }
 
@@ -16,13 +18,17 @@ const BREATH_GRADIENTS = [
   "linear-gradient(180deg, hsl(145, 45%, 50%) 0%, hsl(160, 35%, 28%) 100%)",   // Forest depths
 ];
 
+type Phase = "inhale" | "holdIn" | "exhale" | "holdOut";
+
 export const BreathingVisual = ({
   isActive,
   inhaleTime,
   exhaleTime,
+  holdAfterInhale,
+  holdAfterExhale,
   onPhaseChange,
 }: BreathingVisualProps) => {
-  const [phase, setPhase] = useState<"inhale" | "exhale">("inhale");
+  const [phase, setPhase] = useState<Phase>("inhale");
   const [colorIndex, setColorIndex] = useState(0);
   const [fillPercent, setFillPercent] = useState(0);
 
@@ -38,28 +44,57 @@ export const BreathingVisual = ({
 
     let animationFrame: number;
     let startTime = Date.now();
-    const currentPhaseTime = phase === "inhale" ? inhaleTime : exhaleTime;
+
+    const getPhaseTime = (p: Phase) => {
+      switch (p) {
+        case "inhale": return inhaleTime;
+        case "holdIn": return holdAfterInhale;
+        case "exhale": return exhaleTime;
+        case "holdOut": return holdAfterExhale;
+      }
+    };
+
+    const getNextPhase = (p: Phase): Phase => {
+      switch (p) {
+        case "inhale": return holdAfterInhale > 0 ? "holdIn" : "exhale";
+        case "holdIn": return "exhale";
+        case "exhale": return holdAfterExhale > 0 ? "holdOut" : "inhale";
+        case "holdOut": return "inhale";
+      }
+    };
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / currentPhaseTime, 1);
+      const currentPhaseTime = getPhaseTime(phase);
+      const progress = currentPhaseTime > 0 ? Math.min(elapsed / currentPhaseTime, 1) : 1;
 
+      // Update fill based on phase
       if (phase === "inhale") {
         setFillPercent(progress * 100);
-      } else {
+      } else if (phase === "exhale") {
         setFillPercent((1 - progress) * 100);
       }
+      // During hold phases, fillPercent stays constant
 
       if (progress >= 1) {
-        if (phase === "inhale") {
-          setPhase("exhale");
+        const nextPhase = getNextPhase(phase);
+        
+        // Cycle color when exhale (or holdOut) completes and we're moving to inhale
+        if (nextPhase === "inhale" && (phase === "exhale" || phase === "holdOut")) {
+          setColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
+        }
+
+        setPhase(nextPhase);
+        
+        // Notify parent with simplified phase
+        if (nextPhase === "inhale") {
+          onPhaseChange?.("inhale");
+        } else if (nextPhase === "exhale") {
           onPhaseChange?.("exhale");
         } else {
-          // Exhale complete - cycle to next color
-          setColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
-          setPhase("inhale");
-          onPhaseChange?.("inhale");
+          onPhaseChange?.("hold");
         }
+        
         startTime = Date.now();
       }
 
@@ -67,10 +102,16 @@ export const BreathingVisual = ({
     };
 
     animationFrame = requestAnimationFrame(animate);
-    onPhaseChange?.(phase);
+    
+    // Initial phase notification
+    if (phase === "inhale" || phase === "exhale") {
+      onPhaseChange?.(phase);
+    } else {
+      onPhaseChange?.("hold");
+    }
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [isActive, phase, inhaleTime, exhaleTime, onPhaseChange]);
+  }, [isActive, phase, inhaleTime, exhaleTime, holdAfterInhale, holdAfterExhale, onPhaseChange]);
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">

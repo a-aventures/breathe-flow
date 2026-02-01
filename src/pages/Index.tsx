@@ -9,6 +9,8 @@ const Index = () => {
   const [breathCount, setBreathCount] = useState(0);
   const [inhaleTime, setInhaleTime] = useState(4000);
   const [exhaleTime, setExhaleTime] = useState(4000);
+  const [holdAfterInhale, setHoldAfterInhale] = useState(0);
+  const [holdAfterExhale, setHoldAfterExhale] = useState(0);
 
   const handleToggle = () => {
     if (!isActive) {
@@ -27,9 +29,11 @@ const Index = () => {
     }
   }, []);
 
-  const handleSettingsChange = (inhale: number, exhale: number) => {
+  const handleSettingsChange = (inhale: number, exhale: number, holdIn: number, holdOut: number) => {
     setInhaleTime(inhale);
     setExhaleTime(exhale);
+    setHoldAfterInhale(holdIn);
+    setHoldAfterExhale(holdOut);
   };
 
   return (
@@ -38,6 +42,8 @@ const Index = () => {
       <BreathingSettings
         inhaleTime={inhaleTime}
         exhaleTime={exhaleTime}
+        holdAfterInhale={holdAfterInhale}
+        holdAfterExhale={holdAfterExhale}
         onSettingsChange={handleSettingsChange}
       />
 
@@ -46,6 +52,8 @@ const Index = () => {
         isActive={isActive}
         inhaleTime={inhaleTime}
         exhaleTime={exhaleTime}
+        holdAfterInhale={holdAfterInhale}
+        holdAfterExhale={holdAfterExhale}
         onPhaseChange={handlePhaseChange}
       />
 
