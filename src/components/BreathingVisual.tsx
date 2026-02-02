@@ -29,11 +29,12 @@ export const BreathingVisual = ({
   onPhaseChange,
 }: BreathingVisualProps) => {
   const [phase, setPhase] = useState<Phase>("inhale");
-  const [colorIndex, setColorIndex] = useState(0);
+  const [foregroundColorIndex, setForegroundColorIndex] = useState(0);
+  const [backgroundColorIndex, setBackgroundColorIndex] = useState(1);
   const [fillPercent, setFillPercent] = useState(0);
 
-  const currentGradient = BREATH_GRADIENTS[colorIndex];
-  const nextGradient = BREATH_GRADIENTS[(colorIndex + 1) % BREATH_GRADIENTS.length];
+  const foregroundGradient = BREATH_GRADIENTS[foregroundColorIndex];
+  const backgroundGradient = BREATH_GRADIENTS[backgroundColorIndex];
 
   useEffect(() => {
     if (!isActive) {
@@ -79,9 +80,14 @@ export const BreathingVisual = ({
       if (progress >= 1) {
         const nextPhase = getNextPhase(phase);
         
-        // Cycle color when exhale (or holdOut) completes and we're moving to inhale
+        // Change foreground color when transitioning to inhale (foreground is hidden at 0%)
         if (nextPhase === "inhale" && (phase === "exhale" || phase === "holdOut")) {
-          setColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
+          setForegroundColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
+        }
+        
+        // Change background color when transitioning to exhale (background is hidden at 100% fill)
+        if (nextPhase === "exhale" && (phase === "inhale" || phase === "holdIn")) {
+          setBackgroundColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
         }
 
         setPhase(nextPhase);
@@ -121,20 +127,20 @@ export const BreathingVisual = ({
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">
-      {/* Background - the NEXT gradient, revealed as exhale drains the fill */}
+      {/* Background - revealed as exhale drains the fill */}
       <div
         className="absolute inset-0 w-full h-full"
         style={{
-          background: nextGradient,
+          background: backgroundGradient,
         }}
       />
 
-      {/* Foreground fill - current gradient that fills from bottom to top on inhale */}
+      {/* Foreground fill - fills from bottom to top on inhale */}
       <div
         className="absolute left-0 right-0 bottom-0 w-full"
         style={{
           height: `${fillPercent}%`,
-          background: currentGradient,
+          background: foregroundGradient,
         }}
       />
 

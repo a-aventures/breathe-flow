@@ -32,9 +32,24 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Create a .env.local file with your Supabase credentials.
+# See .env.local.example for required variables.
+
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with:
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_APP_URL=http://localhost:8080
+```
+
+Get your Supabase credentials from [Supabase Dashboard](https://supabase.com/dashboard) → Project Settings → API.
 
 **Edit a file directly in GitHub**
 
@@ -59,6 +74,9 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase (Authentication)
+- React Router
+- React Query
 
 ## How can I deploy this project?
 

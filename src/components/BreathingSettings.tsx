@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Settings, X, Check } from "lucide-react";
+import { Settings, X, Check, LogOut } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface BreathingSettingsProps {
   inhaleTime: number;
@@ -76,6 +78,24 @@ export const BreathingSettings = ({
   const [customHoldIn, setCustomHoldIn] = useState(holdAfterInhale / 1000);
   const [customHoldOut, setCustomHoldOut] = useState(holdAfterExhale / 1000);
   const [open, setOpen] = useState(false);
+  const { signOut, user } = useAuth();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out",
+        description: "You've been signed out successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handlePatternSelect = (pattern: BreathPattern) => {
     onSettingsChange(pattern.inhale, pattern.exhale, pattern.holdAfterInhale, pattern.holdAfterExhale);
@@ -223,6 +243,20 @@ export const BreathingSettings = ({
                 Apply Custom Timing
               </button>
             </div>
+          </div>
+
+          {/* Sign Out */}
+          <div className="pt-4 border-t border-foreground/10">
+            <div className="text-xs text-muted-foreground mb-3">
+              Signed in as {user?.email}
+            </div>
+            <button
+              onClick={handleSignOut}
+              className="w-full py-3 rounded-xl bg-destructive/10 text-destructive font-medium transition-all duration-200 hover:bg-destructive/20 active:scale-98 flex items-center justify-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
           </div>
         </div>
       </SheetContent>
