@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Settings, X, Check, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Settings, Check, LogOut, Crown } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import { useToast } from "@/hooks/use-toast";
 
 interface BreathingSettingsProps {
@@ -78,7 +80,9 @@ export const BreathingSettings = ({
   const [customHoldIn, setCustomHoldIn] = useState(holdAfterInhale / 1000);
   const [customHoldOut, setCustomHoldOut] = useState(holdAfterExhale / 1000);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const { signOut, user } = useAuth();
+  const { isSubscribed } = useSubscription();
   const { toast } = useToast();
 
   const handleSignOut = async () => {
@@ -245,11 +249,28 @@ export const BreathingSettings = ({
             </div>
           </div>
 
-          {/* Sign Out */}
-          <div className="pt-4 border-t border-foreground/10">
-            <div className="text-xs text-muted-foreground mb-3">
+          {/* Account Section */}
+          <div className="pt-4 border-t border-foreground/10 space-y-3">
+            <div className="text-xs text-muted-foreground">
               Signed in as {user?.email}
             </div>
+            
+            {/* Subscription Status / Settings Link */}
+            <button
+              onClick={() => {
+                setOpen(false);
+                navigate('/settings');
+              }}
+              className={`w-full py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
+                isSubscribed
+                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
+                  : 'bg-secondary text-foreground hover:bg-secondary/80'
+              }`}
+            >
+              <Crown className="w-4 h-4" />
+              {isSubscribed ? 'Premium Member' : 'Account Settings'}
+            </button>
+
             <button
               onClick={handleSignOut}
               className="w-full py-3 rounded-xl bg-destructive/10 text-destructive font-medium transition-all duration-200 hover:bg-destructive/20 active:scale-98 flex items-center justify-center gap-2"

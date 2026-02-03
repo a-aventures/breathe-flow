@@ -2,6 +2,10 @@ import { useState, useCallback } from "react";
 import { BreathingVisual } from "@/components/BreathingVisual";
 import { BreathingControls } from "@/components/BreathingControls";
 import { BreathingSettings } from "@/components/BreathingSettings";
+import { PaywallModal } from "@/components/PaywallModal";
+import { useSessionCounter } from "@/hooks/use-session-counter";
+import { useSubscription } from "@/contexts/SubscriptionContext";
+import { trackEvent } from "@/lib/posthog";
 
 const getPatternName = (inhale: number, exhale: number, holdIn: number, holdOut: number): string => {
   // Check for known patterns
@@ -28,14 +32,50 @@ const Index = () => {
   const [exhaleTime, setExhaleTime] = useState(4000);
   const [holdAfterInhale, setHoldAfterInhale] = useState(0);
   const [holdAfterExhale, setHoldAfterExhale] = useState(0);
-
   const [currentHoldDuration, setCurrentHoldDuration] = useState(0);
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
+
+  const { sessionCount, incrementSessionCount, hasReachedFreeLimit, remainingFreeSessions } = useSessionCounter();
+  const { isSubscribed } = useSubscription();
+
+  // Track minimum session duration (e.g., 1 minute) to count as a "session"
+  const MIN_SESSION_DURATION = 60 * 1000; // 1 minute in ms
 
   const handleToggle = () => {
     if (!isActive) {
+      // Starting a session
       setBreathCount(1);
+      setSessionStartTime(Date.now());
+      trackEvent('session_started', {
+        pattern: patternName,
+        sessionCount: sessionCount + 1,
+        isSubscribed,
+      });
     } else {
+      // Stopping a session
+      if (sessionStartTime) {
+        const duration = Date.now() - sessionStartTime;
+        
+        // Only count as a completed session if it was at least MIN_SESSION_DURATION
+        if (duration >= MIN_SESSION_DURATION) {
+          const newCount = incrementSessionCount();
+          trackEvent('session_completed', {
+            pattern: patternName,
+            durationSeconds: Math.round(duration / 1000),
+            breathCount,
+            sessionCount: newCount,
+            isSubscribed,
+          });
+
+          // Show paywall after completing a session if limit reached and not subscribed
+          if (!isSubscribed && newCount >= 3) {
+            setTimeout(() => setShowPaywall(true), 500);
+          }
+        }
+      }
       setBreathCount(0);
+      setSessionStartTime(null);
     }
     setIsActive(!isActive);
     setPhase("inhale");
@@ -88,6 +128,19 @@ const Index = () => {
         breathCount={breathCount}
         patternName={patternName}
         holdDuration={currentHoldDuration}
+      />
+
+      {/* Free session indicator (only shown before limit reached) */}
+      {!isSubscribed && !hasReachedFreeLimit && (
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
+          {remainingFreeSessions} free session{remainingFreeSessions !== 1 ? 's' : ''} remaining
+        </div>
+      )}
+
+      {/* Paywall Modal */}
+      <PaywallModal
+        open={showPaywall}
+        onOpenChange={setShowPaywall}
       />
     </div>
   );
