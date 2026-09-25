@@ -65,6 +65,7 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+       </BreathThemeProvider>
       </SubscriptionProvider>
     </AuthProvider>
   </QueryClientProvider>
