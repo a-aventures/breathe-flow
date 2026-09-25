@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import { useToast } from "@/hooks/use-toast";
+import { useBreathTheme } from "@/hooks/use-breath-theme";
 
 interface BreathingSettingsProps {
   inhaleTime: number;
@@ -84,6 +85,7 @@ export const BreathingSettings = ({
   const { signOut, user } = useAuth();
   const { isSubscribed } = useSubscription();
   const { toast } = useToast();
+  const { themeId, themes, setThemeId } = useBreathTheme();
 
   const handleSignOut = async () => {
     try {
@@ -172,6 +174,44 @@ export const BreathingSettings = ({
               ))}
             </div>
           </div>
+
+          {/* Visual Theme */}
+          <div className="space-y-3 pt-4 border-t border-foreground/10">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+              Visual Theme
+            </h3>
+            <div className="space-y-2">
+              {themes.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setThemeId(t.id)}
+                  className={`w-full p-4 rounded-xl text-left transition-all duration-200 border ${
+                    themeId === t.id
+                      ? "bg-primary/20 border-primary/40"
+                      : "bg-secondary/50 border-transparent hover:bg-secondary"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="font-medium text-foreground">{t.name}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
+                    </div>
+                    {themeId === t.id && <Check className="w-5 h-5 text-primary shrink-0" />}
+                  </div>
+                  <div className="mt-3 flex gap-1.5">
+                    {t.gradients.map((g, i) => (
+                      <div
+                        key={i}
+                        className="h-6 flex-1 rounded-md"
+                        style={{ background: g }}
+                      />
+                    ))}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
 
           {/* Custom Duration */}
           <div className="space-y-4 pt-4 border-t border-foreground/10">

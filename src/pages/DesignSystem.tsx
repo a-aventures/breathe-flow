@@ -7,17 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { BREATH_GRADIENTS } from "@/components/BreathingVisual";
 import { BreathingControls } from "@/components/BreathingControls";
 import { BreathingSettings } from "@/components/BreathingSettings";
+import { BreathingVisual } from "@/components/BreathingVisual";
+import { useBreathTheme } from "@/hooks/use-breath-theme";
 
 const TOKENS = [
   "background", "foreground", "card", "card-foreground", "primary", "primary-foreground",
   "secondary", "secondary-foreground", "muted", "muted-foreground", "accent",
   "accent-foreground", "destructive", "border", "ring",
 ];
-
-const GRADIENT_NAMES = ["Ocean depths", "Teal waters", "Lavender dusk", "Soft rose", "Warm sunset", "Forest depths"];
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="space-y-4">
@@ -30,6 +29,8 @@ const DesignSystem = () => {
   const [phase, setPhase] = useState<"inhale" | "exhale" | "hold">("inhale");
   const [active, setActive] = useState(false);
   const [times, setTimes] = useState({ inhale: 4000, exhale: 4000, holdIn: 0, holdOut: 0 });
+  const { themeId, themes, setThemeId, theme } = useBreathTheme();
+  const [previewActive, setPreviewActive] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -54,15 +55,46 @@ const DesignSystem = () => {
         </Section>
 
         <Section title="Breath gradients">
+          <div className="flex flex-wrap gap-2">
+            {themes.map((t) => (
+              <Button
+                key={t.id}
+                size="sm"
+                variant={themeId === t.id ? "default" : "outline"}
+                onClick={() => setThemeId(t.id)}
+              >
+                {t.name}
+              </Button>
+            ))}
+          </div>
+          <p className="text-sm text-muted-foreground">{theme.description}</p>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
-            {BREATH_GRADIENTS.map((g, i) => (
+            {theme.gradients.map((g, i) => (
               <div key={i} className="space-y-2">
                 <div className="h-40 rounded-xl" style={{ background: g }} />
-                <p className="text-xs text-muted-foreground">{GRADIENT_NAMES[i]}</p>
+                <p className="text-xs text-muted-foreground">{theme.gradientNames[i]}</p>
               </div>
             ))}
           </div>
+
+          <div className="relative h-[420px] overflow-hidden rounded-2xl border border-border [transform:translateZ(0)]">
+            <div className="absolute inset-0 [&>div]:!absolute">
+              <BreathingVisual
+                isActive={previewActive}
+                inhaleTime={4000}
+                exhaleTime={4000}
+                holdAfterInhale={0}
+                holdAfterExhale={0}
+              />
+            </div>
+            <div className="absolute inset-x-0 bottom-6 flex justify-center">
+              <Button onClick={() => setPreviewActive((a) => !a)}>
+                {previewActive ? "Pause preview" : "Play breathing preview"}
+              </Button>
+            </div>
+          </div>
         </Section>
+
 
         <Section title="Typography">
           <Card>
@@ -120,7 +152,7 @@ const DesignSystem = () => {
           </div>
           <div
             className="relative h-[520px] overflow-hidden rounded-2xl border border-border [transform:translateZ(0)]"
-            style={{ background: BREATH_GRADIENTS[0] }}
+            style={{ background: theme.gradients[0] }}
           >
             <BreathingControls
               isActive={active}

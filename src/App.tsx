@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
+import { BreathThemeProvider } from "@/hooks/use-breath-theme";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import Settings from "./pages/Settings";
@@ -35,6 +36,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <SubscriptionProvider>
+       <BreathThemeProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -63,6 +65,7 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+       </BreathThemeProvider>
       </SubscriptionProvider>
     </AuthProvider>
   </QueryClientProvider>
