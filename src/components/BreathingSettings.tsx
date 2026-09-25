@@ -6,6 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import { useToast } from "@/hooks/use-toast";
+import { useBreathTheme } from "@/hooks/use-breath-theme";
 
 interface BreathingSettingsProps {
   inhaleTime: number;
