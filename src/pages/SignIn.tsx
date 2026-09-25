@@ -4,6 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { lovable } from '@/integrations/lovable';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -118,9 +119,35 @@ const SignIn = () => {
           <h2 className="text-3xl font-bold tracking-tight text-card-foreground breath-text-glow">Welcome to Breathwork</h2>
           <p className="mt-2 text-muted-foreground">Sign in to start your practice</p>
         </div>
-        
 
-        
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full border-border bg-secondary text-foreground font-semibold hover:bg-secondary/80"
+          disabled={loading}
+          onClick={async () => {
+            setLoading(true);
+            const result = await lovable.auth.signInWithOAuth('google', {
+              redirect_uri: window.location.origin,
+            });
+            if (result.error) {
+              toast({ title: 'Google sign-in failed', description: result.error.message, variant: 'destructive' });
+              setLoading(false);
+            }
+          }}
+        >
+          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M21.35 11.1H12v2.98h5.35c-.23 1.4-1.64 4.1-5.35 4.1-3.22 0-5.85-2.67-5.85-5.96S8.78 6.26 12 6.26c1.83 0 3.06.78 3.76 1.45l2.56-2.47C16.68 3.7 14.55 2.75 12 2.75 6.9 2.75 2.75 6.9 2.75 12s4.15 9.25 9.25 9.25c5.34 0 8.88-3.75 8.88-9.04 0-.61-.07-1.07-.15-1.11z"/>
+          </svg>
+          Continue with Google
+        </Button>
+
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="h-px flex-1 bg-border" />
+          or
+          <div className="h-px flex-1 bg-border" />
+        </div>
+
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-card-foreground">
