@@ -167,7 +167,7 @@ const SignIn = () => {
           <button
             type="button"
             onClick={() => setUsePassword(!usePassword)}
-            className="w-full text-sm text-gray-600 hover:text-gray-900"
+            className="w-full text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             {usePassword ? 'Use magic link instead' : 'Use password instead'}
           </button>
