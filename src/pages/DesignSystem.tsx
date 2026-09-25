@@ -29,6 +29,8 @@ const DesignSystem = () => {
   const [phase, setPhase] = useState<"inhale" | "exhale" | "hold">("inhale");
   const [active, setActive] = useState(false);
   const [times, setTimes] = useState({ inhale: 4000, exhale: 4000, holdIn: 0, holdOut: 0 });
+  const { themeId, themes, setThemeId, theme } = useBreathTheme();
+  const [previewActive, setPreviewActive] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
