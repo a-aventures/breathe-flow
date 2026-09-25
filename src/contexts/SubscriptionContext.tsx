@@ -90,7 +90,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
         console.error('Error fetching subscription:', error);
       }
 
-      setSubscription(data || null);
+      setSubscription((data as Subscription) || null);
     } catch (err) {
       console.error('Error fetching subscription:', err);
     } finally {
