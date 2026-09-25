@@ -7,17 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { BREATH_GRADIENTS } from "@/components/BreathingVisual";
 import { BreathingControls } from "@/components/BreathingControls";
 import { BreathingSettings } from "@/components/BreathingSettings";
+import { BreathingVisual } from "@/components/BreathingVisual";
+import { useBreathTheme } from "@/hooks/use-breath-theme";
 
 const TOKENS = [
   "background", "foreground", "card", "card-foreground", "primary", "primary-foreground",
   "secondary", "secondary-foreground", "muted", "muted-foreground", "accent",
   "accent-foreground", "destructive", "border", "ring",
 ];
-
-const GRADIENT_NAMES = ["Ocean depths", "Teal waters", "Lavender dusk", "Soft rose", "Warm sunset", "Forest depths"];
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="space-y-4">
