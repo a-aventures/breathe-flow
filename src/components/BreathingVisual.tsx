@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useBreathTheme } from "@/hooks/use-breath-theme";
+import { getTheme } from "@/lib/breath-themes";
 
 interface BreathingVisualProps {
   isActive: boolean;
@@ -7,16 +9,11 @@ interface BreathingVisualProps {
   holdAfterInhale: number;
   holdAfterExhale: number;
   onPhaseChange?: (phase: "inhale" | "exhale" | "hold", holdDuration?: number) => void;
+  /** Optional override, used by the design system preview */
+  themeId?: string;
 }
 
-export const BREATH_GRADIENTS = [
-  "linear-gradient(180deg, hsl(200, 60%, 55%) 0%, hsl(220, 50%, 35%) 100%)",   // Ocean depths
-  "linear-gradient(180deg, hsl(165, 55%, 50%) 0%, hsl(185, 45%, 30%) 100%)",   // Teal waters
-  "linear-gradient(180deg, hsl(270, 45%, 60%) 0%, hsl(290, 35%, 35%) 100%)",   // Lavender dusk
-  "linear-gradient(180deg, hsl(345, 50%, 60%) 0%, hsl(320, 40%, 35%) 100%)",   // Soft rose
-  "linear-gradient(180deg, hsl(25, 60%, 60%) 0%, hsl(10, 50%, 35%) 100%)",     // Warm sunset
-  "linear-gradient(180deg, hsl(145, 45%, 50%) 0%, hsl(160, 35%, 28%) 100%)",   // Forest depths
-];
+export const BREATH_GRADIENTS = getTheme("classic").gradients;
 
 type Phase = "inhale" | "holdIn" | "exhale" | "holdOut";
 
