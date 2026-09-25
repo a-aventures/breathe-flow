@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import DesignSystem from "./pages/DesignSystem";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
+              <Route path="/design-system" element={<DesignSystem />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
