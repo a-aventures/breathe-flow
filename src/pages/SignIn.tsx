@@ -173,7 +173,7 @@ const SignIn = () => {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs text-gray-500">
+        <p className="mt-4 text-center text-xs text-muted-foreground">
           {usePassword ? 'Sign in with your password' : "We'll email you a magic link for a password-free sign in"}
         </p>
       </div>
