@@ -9,7 +9,7 @@ interface BreathingVisualProps {
   onPhaseChange?: (phase: "inhale" | "exhale" | "hold", holdDuration?: number) => void;
 }
 
-const BREATH_GRADIENTS = [
+export const BREATH_GRADIENTS = [
   "linear-gradient(180deg, hsl(200, 60%, 55%) 0%, hsl(220, 50%, 35%) 100%)",   // Ocean depths
   "linear-gradient(180deg, hsl(165, 55%, 50%) 0%, hsl(185, 45%, 30%) 100%)",   // Teal waters
   "linear-gradient(180deg, hsl(270, 45%, 60%) 0%, hsl(290, 35%, 35%) 100%)",   // Lavender dusk
