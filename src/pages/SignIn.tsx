@@ -112,12 +112,14 @@ const SignIn = () => {
 
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="w-full max-w-md space-y-8 rounded-2xl border border-border bg-card p-8 shadow-2xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Welcome to Breathwork</h2>
-          <p className="mt-2 text-gray-600">Sign in to start your practice</p>
+          <h2 className="text-3xl font-bold tracking-tight text-card-foreground breath-text-glow">Welcome to Breathwork</h2>
+          <p className="mt-2 text-muted-foreground">Sign in to start your practice</p>
         </div>
+        
+
         
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div>
