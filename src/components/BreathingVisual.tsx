@@ -24,14 +24,18 @@ export const BreathingVisual = ({
   holdAfterInhale,
   holdAfterExhale,
   onPhaseChange,
+  themeId,
 }: BreathingVisualProps) => {
+  const { theme } = useBreathTheme();
+  const gradients = themeId ? getTheme(themeId).gradients : theme.gradients;
+
   const [phase, setPhase] = useState<Phase>("inhale");
   const [foregroundColorIndex, setForegroundColorIndex] = useState(0);
   const [backgroundColorIndex, setBackgroundColorIndex] = useState(1);
   const [fillPercent, setFillPercent] = useState(0);
 
-  const foregroundGradient = BREATH_GRADIENTS[foregroundColorIndex];
-  const backgroundGradient = BREATH_GRADIENTS[backgroundColorIndex];
+  const foregroundGradient = gradients[foregroundColorIndex % gradients.length];
+  const backgroundGradient = gradients[backgroundColorIndex % gradients.length];
 
   useEffect(() => {
     if (!isActive) {
