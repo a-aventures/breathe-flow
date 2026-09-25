@@ -132,7 +132,8 @@ const SignIn = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1"
+              className="mt-1 bg-secondary text-foreground placeholder:text-muted-foreground border-border"
+
               disabled={loading}
               autoFocus
             />
