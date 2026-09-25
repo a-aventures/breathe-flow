@@ -85,6 +85,7 @@ export const BreathingSettings = ({
   const { signOut, user } = useAuth();
   const { isSubscribed } = useSubscription();
   const { toast } = useToast();
+  const { themeId, themes, setThemeId } = useBreathTheme();
 
   const handleSignOut = async () => {
     try {
