@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
 import { getTheme } from "@/lib/breath-themes";
 
@@ -33,12 +33,14 @@ export const BreathingVisual = ({
   const [foregroundColorIndex, setForegroundColorIndex] = useState(0);
   const [backgroundColorIndex, setBackgroundColorIndex] = useState(1);
   const [fillPercent, setFillPercent] = useState(0);
+  const wasActiveRef = useRef(false);
 
   const foregroundGradient = gradients[foregroundColorIndex % gradients.length];
   const backgroundGradient = gradients[backgroundColorIndex % gradients.length];
 
   useEffect(() => {
     if (!isActive) {
+      wasActiveRef.current = false;
       setFillPercent(0);
       setPhase("inhale");
       return;
@@ -112,15 +114,20 @@ export const BreathingVisual = ({
 
     animationFrame = requestAnimationFrame(animate);
     
-    // Initial phase notification
-    if (phase === "inhale") {
-      onPhaseChange?.("inhale");
-    } else if (phase === "exhale") {
-      onPhaseChange?.("exhale");
-    } else if (phase === "holdIn") {
-      onPhaseChange?.("hold", holdAfterInhale);
-    } else if (phase === "holdOut") {
-      onPhaseChange?.("hold", holdAfterExhale);
+    // Initial phase notification — only when a session starts, not on every
+    // phase change (the transition above already notifies, so re-notifying
+    // here would double-count breaths)
+    if (!wasActiveRef.current) {
+      wasActiveRef.current = true;
+      if (phase === "inhale") {
+        onPhaseChange?.("inhale");
+      } else if (phase === "exhale") {
+        onPhaseChange?.("exhale");
+      } else if (phase === "holdIn") {
+        onPhaseChange?.("hold", holdAfterInhale);
+      } else if (phase === "holdOut") {
+        onPhaseChange?.("hold", holdAfterExhale);
+      }
     }
 
     return () => cancelAnimationFrame(animationFrame);
