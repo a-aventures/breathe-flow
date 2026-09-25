@@ -94,14 +94,14 @@ const SignIn = () => {
 
   if (emailSent) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+      <div className="flex min-h-screen items-center justify-center bg-background p-6">
+        <div className="w-full max-w-md space-y-8 rounded-2xl border border-border bg-card p-8 shadow-2xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Check your email</h2>
-            <p className="mt-4 text-gray-600">
-              We sent a magic link to <span className="font-semibold">{email}</span>
+            <h2 className="text-3xl font-bold tracking-tight text-card-foreground breath-text-glow">Check your email</h2>
+            <p className="mt-4 text-card-foreground/90">
+              We sent a magic link to <span className="font-semibold text-primary">{email}</span>
             </p>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-muted-foreground">
               Click the link in the email to sign in
             </p>
           </div>
@@ -110,17 +110,20 @@ const SignIn = () => {
     );
   }
 
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-background p-6">
+      <div className="w-full max-w-md space-y-8 rounded-2xl border border-border bg-card p-8 shadow-2xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Welcome to Breathwork</h2>
-          <p className="mt-2 text-gray-600">Sign in to start your practice</p>
+          <h2 className="text-3xl font-bold tracking-tight text-card-foreground breath-text-glow">Welcome to Breathwork</h2>
+          <p className="mt-2 text-muted-foreground">Sign in to start your practice</p>
         </div>
+        
+
         
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-card-foreground">
               Email address
             </label>
             <Input
@@ -129,7 +132,8 @@ const SignIn = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="mt-1"
+              className="mt-1 bg-secondary text-foreground placeholder:text-muted-foreground border-border"
+
               disabled={loading}
               autoFocus
             />
@@ -137,7 +141,7 @@ const SignIn = () => {
 
           {usePassword && (
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-card-foreground">
                 Password
               </label>
               <Input
@@ -146,7 +150,7 @@ const SignIn = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-1"
+                className="mt-1 bg-secondary text-foreground placeholder:text-muted-foreground border-border"
                 disabled={loading}
               />
             </div>
@@ -154,7 +158,7 @@ const SignIn = () => {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90"
             disabled={loading}
           >
             {loading ? (usePassword ? 'Signing in...' : 'Sending...') : (usePassword ? 'Sign in' : 'Send magic link')}
@@ -163,13 +167,13 @@ const SignIn = () => {
           <button
             type="button"
             onClick={() => setUsePassword(!usePassword)}
-            className="w-full text-sm text-gray-600 hover:text-gray-900"
+            className="w-full text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             {usePassword ? 'Use magic link instead' : 'Use password instead'}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs text-gray-500">
+        <p className="mt-4 text-center text-xs text-muted-foreground">
           {usePassword ? 'Sign in with your password' : "We'll email you a magic link for a password-free sign in"}
         </p>
       </div>
