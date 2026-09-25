@@ -120,13 +120,14 @@ export const BreathingVisual = ({
     if (!wasActiveRef.current) {
       wasActiveRef.current = true;
       if (phase === "inhale") {
-      onPhaseChange?.("inhale");
-    } else if (phase === "exhale") {
-      onPhaseChange?.("exhale");
-    } else if (phase === "holdIn") {
-      onPhaseChange?.("hold", holdAfterInhale);
-    } else if (phase === "holdOut") {
-      onPhaseChange?.("hold", holdAfterExhale);
+        onPhaseChange?.("inhale");
+      } else if (phase === "exhale") {
+        onPhaseChange?.("exhale");
+      } else if (phase === "holdIn") {
+        onPhaseChange?.("hold", holdAfterInhale);
+      } else if (phase === "holdOut") {
+        onPhaseChange?.("hold", holdAfterExhale);
+      }
     }
 
     return () => cancelAnimationFrame(animationFrame);
