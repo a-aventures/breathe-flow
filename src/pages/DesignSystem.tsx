@@ -152,7 +152,7 @@ const DesignSystem = () => {
           </div>
           <div
             className="relative h-[520px] overflow-hidden rounded-2xl border border-border [transform:translateZ(0)]"
-            style={{ background: BREATH_GRADIENTS[0] }}
+            style={{ background: theme.gradients[0] }}
           >
             <BreathingControls
               isActive={active}
