@@ -94,14 +94,14 @@ const SignIn = () => {
 
   if (emailSent) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+      <div className="flex min-h-screen items-center justify-center bg-background p-6">
+        <div className="w-full max-w-md space-y-8 rounded-2xl border border-border bg-card p-8 shadow-2xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight">Check your email</h2>
-            <p className="mt-4 text-gray-600">
-              We sent a magic link to <span className="font-semibold">{email}</span>
+            <h2 className="text-3xl font-bold tracking-tight text-card-foreground breath-text-glow">Check your email</h2>
+            <p className="mt-4 text-card-foreground/90">
+              We sent a magic link to <span className="font-semibold text-primary">{email}</span>
             </p>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-muted-foreground">
               Click the link in the email to sign in
             </p>
           </div>
@@ -109,6 +109,7 @@ const SignIn = () => {
       </div>
     );
   }
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
