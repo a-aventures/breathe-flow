@@ -158,7 +158,7 @@ const SignIn = () => {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90"
             disabled={loading}
           >
             {loading ? (usePassword ? 'Signing in...' : 'Sending...') : (usePassword ? 'Sign in' : 'Send magic link')}
