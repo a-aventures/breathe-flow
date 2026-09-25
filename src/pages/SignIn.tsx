@@ -150,7 +150,7 @@ const SignIn = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-1"
+                className="mt-1 bg-secondary text-foreground placeholder:text-muted-foreground border-border"
                 disabled={loading}
               />
             </div>
