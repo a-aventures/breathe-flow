@@ -1,54 +1,68 @@
-@tailwind base;
+
 @tailwind components;
 @tailwind utilities;
 
+/* =====================================================================
+   BREATHWORK DESIGN SYSTEM — global tokens
+   Change a value here and it updates everywhere in the app.
+   Colors use HSL: "hue saturation% lightness%"
+     hue 0-360 (0 red, 30 orange, 120 green, 180 teal, 220 blue, 280 violet)
+     saturation 0-100% (0 grey, 100 vivid) · lightness 0-100% (0 black, 100 white)
+   Breath gradients (the full-screen breathing colors) live in
+   src/lib/breath-themes.ts
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+
 @layer base {
   :root {
-    --background: 220 30% 8%;
-    --foreground: 0 0% 98%;
-
-    --card: 220 30% 12%;
+    /* ---------- 1. SURFACES ---------- */
+    --background: 220 30% 8%;          /* app background */
+    --foreground: 0 0% 98%;            /* main text */
+    --card: 220 30% 12%;               /* cards, panels, settings sheet */
     --card-foreground: 0 0% 98%;
-
     --popover: 220 30% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 180 50% 60%;
-    --primary-foreground: 220 30% 8%;
-
-    --secondary: 220 20% 20%;
+    /* ---------- 2. BRAND & ACCENTS ---------- */
+    --primary: 180 50% 60%;            /* main buttons, highlights */
+    --primary-foreground: 220 30% 8%;  /* text on primary buttons */
+    --secondary: 220 20% 20%;          /* secondary buttons */
     --secondary-foreground: 0 0% 98%;
-
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 10% 60%;
-
-    --accent: 280 40% 65%;
+    --accent: 280 40% 65%;             /* small accents */
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* ---------- 3. SUPPORTING ---------- */
+    --muted: 220 20% 18%;              /* quiet backgrounds */
+    --muted-foreground: 220 10% 60%;   /* secondary text, labels */
+    --destructive: 0 84.2% 60.2%;      /* errors */
     --destructive-foreground: 210 40% 98%;
-
     --border: 220 20% 20%;
     --input: 220 20% 20%;
-    --ring: 180 50% 60%;
+    --ring: 180 50% 60%;               /* focus outline */
 
-    --radius: 1rem;
+    /* ---------- 4. TYPOGRAPHY ---------- */
+    --font-sans: 'Inter', system-ui, sans-serif;      /* body text */
+    --font-display: 'Inter', system-ui, sans-serif;   /* headings, pattern name */
+    --font-weight-display: 300;                       /* heading thickness */
+    --letter-spacing-display: 0.02em;
 
-    /* Breathwork color palette */
+    /* ---------- 5. SHAPE & SPACING ---------- */
+    --radius: 1rem;                    /* corner roundness (0 = square) */
+    --space-unit: 1rem;                /* base spacing for screen edges */
+    --glow-strength: 0.5;              /* text glow 0 = off, 1 = strong */
+    --glow-size: 30px;
+    --shadow-soft: 0 10px 30px -10px hsl(var(--background) / 0.6);
+
+    /* ---------- Legacy (unused by screens, kept for compatibility) ---------- */
     --breath-1: 200 60% 45%;
     --breath-2: 170 50% 50%;
     --breath-3: 280 40% 55%;
     --breath-4: 340 45% 55%;
     --breath-5: 30 55% 55%;
     --breath-6: 150 40% 45%;
-
-    /* Background gradients */
-    --bg-gradient-1: linear-gradient(180deg, hsl(220 35% 12%) 0%, hsl(200 40% 15%) 100%);
-    --bg-gradient-2: linear-gradient(180deg, hsl(200 40% 15%) 0%, hsl(170 35% 12%) 100%);
-    --bg-gradient-3: linear-gradient(180deg, hsl(170 35% 12%) 0%, hsl(280 30% 15%) 100%);
-    --bg-gradient-4: linear-gradient(180deg, hsl(280 30% 15%) 0%, hsl(340 30% 12%) 100%);
-    --bg-gradient-5: linear-gradient(180deg, hsl(340 30% 12%) 0%, hsl(30 35% 12%) 100%);
-    --bg-gradient-6: linear-gradient(180deg, hsl(30 35% 12%) 0%, hsl(150 30% 12%) 100%);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -59,11 +73,6 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .dark {
-    --background: 220 30% 8%;
-    --foreground: 0 0% 98%;
-  }
 }
 
 @layer base {
@@ -73,13 +82,18 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: var(--letter-spacing-display);
   }
 }
 
 @layer utilities {
   .breath-text-glow {
-    text-shadow: 0 0 30px hsl(var(--primary) / 0.5);
+    text-shadow: 0 0 var(--glow-size) hsl(var(--primary) / var(--glow-strength));
   }
 
   .breath-overlay {
