@@ -89,7 +89,7 @@ export const BreathingControls = ({
           </div>
         ) : (
           <div className="text-center breath-text-legible">
-            <h1 className="text-3xl md:text-4xl font-light tracking-wide text-foreground mb-2">
+            <h1 className="text-6xl md:text-7xl font-light tracking-wide text-foreground mb-2">
               Breathwork
             </h1>
             <p className="text-foreground/75 text-lg">
