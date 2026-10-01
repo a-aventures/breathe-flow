@@ -108,7 +108,18 @@
   }
 
   .breath-text-glow {
-    text-shadow: 0 0 var(--glow-size) hsl(var(--primary) / var(--glow-strength));
+    /* Dark base shadow keeps text readable over light gradients; colored glow adds atmosphere */
+    text-shadow:
+      0 1px 4px hsl(var(--background) / 0.6),
+      0 2px 14px hsl(var(--background) / 0.4),
+      0 0 var(--glow-size) hsl(var(--primary) / var(--glow-strength));
+  }
+
+  .breath-text-legible {
+    /* Soft dark halo so text stays readable on any gradient */
+    text-shadow:
+      0 1px 3px hsl(var(--background) / 0.65),
+      0 2px 12px hsl(var(--background) / 0.45);
   }
 
   .breath-overlay {
