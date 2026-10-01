@@ -27,7 +27,7 @@
     --popover-foreground: 0 0% 98%;
 
     /* ---------- 2. BRAND & ACCENTS ---------- */
-    --primary: 180 50% 60%;            /* main buttons, highlights */
+    --primary: 180 50% 60%;            /* highlights, focus accents */
     --primary-foreground: 220 30% 8%;  /* text on primary buttons */
     --secondary: 220 20% 20%;          /* secondary buttons */
     --secondary-foreground: 0 0% 98%;
@@ -51,6 +51,9 @@
 
     /* ---------- 5. SHAPE & SPACING ---------- */
     --radius: 1rem;                    /* corner roundness (0 = square) */
+    --button-shade: 220 30% 8%;       /* neutral tint over the surface beneath each button */
+    --button-shade-opacity: 0.32;     /* tint strength; backdrop darkens the actual surface */
+    --button-backdrop-brightness: 0.65;
     --space-unit: 1rem;                /* base spacing for screen edges */
     --glow-strength: 0.5;              /* text glow 0 = off, 1 = strong */
     --glow-size: 30px;
@@ -92,6 +95,16 @@
 }
 
 @layer utilities {
+  .button-surface {
+    background-color: hsl(var(--button-shade) / var(--button-shade-opacity));
+    -webkit-backdrop-filter: brightness(var(--button-backdrop-brightness)) blur(10px);
+    backdrop-filter: brightness(var(--button-backdrop-brightness)) blur(10px);
+  }
+
+  .button-surface:hover {
+    background-color: hsl(var(--button-shade) / 0.45);
+  }
+
   .breath-text-glow {
     text-shadow: 0 0 var(--glow-size) hsl(var(--primary) / var(--glow-strength));
   }

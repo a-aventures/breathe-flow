@@ -123,7 +123,7 @@ const SignIn = () => {
         <Button
           type="button"
           variant="outline"
-          className="w-full border-border bg-secondary text-foreground font-semibold hover:bg-secondary/80"
+          className="w-full font-semibold"
           disabled={loading}
           onClick={async () => {
             setLoading(true);
@@ -185,19 +185,20 @@ const SignIn = () => {
 
           <Button
             type="submit"
-            className="w-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90"
+            className="w-full font-semibold"
             disabled={loading}
           >
             {loading ? (usePassword ? 'Signing in...' : 'Sending...') : (usePassword ? 'Sign in' : 'Send magic link')}
           </Button>
 
-          <button
+          <Button
             type="button"
+            variant="ghost"
             onClick={() => setUsePassword(!usePassword)}
-            className="w-full text-sm text-muted-foreground transition-colors hover:text-primary"
+            className="w-full text-sm text-muted-foreground"
           >
             {usePassword ? 'Use magic link instead' : 'Use password instead'}
-          </button>
+          </Button>
         </form>
 
         <p className="mt-4 text-center text-xs text-muted-foreground">
