@@ -126,10 +126,14 @@
     backdrop-filter: blur(32px) saturate(180%) brightness(0.8);
   }
 
-  /* Text sits directly on the gradients with no shadows; contrast comes from gradient luminance */
+  /* Debossed text: translucent fill + soft light edge below, faint dark edge above,
+     so the type looks pressed into the gradient rather than printed on it */
   .breath-text-glow,
   .breath-text-legible {
-    text-shadow: none;
+    color: hsl(0 0% 100% / 0.55);
+    text-shadow:
+      0 1px 1px hsl(0 0% 100% / 0.18),
+      0 -1px 1px hsl(0 0% 0% / 0.22);
     -webkit-font-smoothing: antialiased;
   }
 
