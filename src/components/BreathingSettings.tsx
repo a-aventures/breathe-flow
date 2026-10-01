@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import { useToast } from "@/hooks/use-toast";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
+import { Button } from "@/components/ui/button";
 
 interface BreathingSettingsProps {
   inhaleTime: number;
@@ -126,12 +127,13 @@ export const BreathingSettings = ({
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <button
-          className="absolute top-6 right-6 z-50 p-3 rounded-full bg-foreground/10 backdrop-blur-md border border-foreground/20 transition-all duration-300 hover:bg-foreground/20"
+        <Button
+          size="icon"
+          className="absolute top-6 right-6 z-50 h-11 w-11 border-foreground/40"
           aria-label="Settings"
         >
           <Settings className="w-5 h-5 text-foreground" />
-        </button>
+        </Button>
       </SheetTrigger>
 
       <SheetContent
@@ -150,27 +152,24 @@ export const BreathingSettings = ({
             </h3>
             <div className="space-y-2">
               {BREATH_PATTERNS.map((pattern) => (
-                <button
+                <Button
+                  variant={isPatternActive(pattern) ? "default" : "secondary"}
                   key={pattern.name}
                   onClick={() => handlePatternSelect(pattern)}
-                  className={`w-full p-4 rounded-xl text-left transition-all duration-200 border ${
-                    isPatternActive(pattern)
-                      ? "bg-primary/20 border-primary/40"
-                      : "bg-secondary/50 border-transparent hover:bg-secondary"
-                  }`}
+                  className="w-full h-auto min-h-16 px-5 py-3 text-left whitespace-normal"
                 >
-                  <div className="flex items-center justify-between">
-                    <div>
+                  <div className="flex w-full items-center justify-between gap-3">
+                    <div className="min-w-0">
                       <p className="font-medium text-foreground">{pattern.name}</p>
                       <p className="text-sm text-muted-foreground mt-1">
                         {pattern.description}
                       </p>
                     </div>
                     {isPatternActive(pattern) && (
-                      <Check className="w-5 h-5 text-primary" />
+                      <Check className="w-5 h-5 text-foreground shrink-0" />
                     )}
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -182,23 +181,20 @@ export const BreathingSettings = ({
             </h3>
             <div className="space-y-2">
               {themes.map((t) => (
-                <button
+                <Button
+                  variant={themeId === t.id ? "default" : "secondary"}
                   key={t.id}
                   onClick={() => setThemeId(t.id)}
-                  className={`w-full p-4 rounded-xl text-left transition-all duration-200 border ${
-                    themeId === t.id
-                      ? "bg-primary/20 border-primary/40"
-                      : "bg-secondary/50 border-transparent hover:bg-secondary"
-                  }`}
+                  className="w-full h-auto px-5 py-4 text-left whitespace-normal flex-col items-stretch"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
                       <p className="font-medium text-foreground">{t.name}</p>
                       <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
                     </div>
-                    {themeId === t.id && <Check className="w-5 h-5 text-primary shrink-0" />}
+                    {themeId === t.id && <Check className="w-5 h-5 text-foreground shrink-0" />}
                   </div>
-                  <div className="mt-3 flex gap-1.5">
+                  <div className="mt-1 flex gap-1.5">
                     {t.gradients.map((g, i) => (
                       <div
                         key={i}
@@ -207,7 +203,7 @@ export const BreathingSettings = ({
                       />
                     ))}
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -280,12 +276,12 @@ export const BreathingSettings = ({
                 />
               </div>
 
-              <button
+              <Button
                 onClick={handleCustomApply}
-                className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium transition-all duration-200 hover:opacity-90 active:scale-98"
+                className="w-full h-12 font-medium"
               >
                 Apply Custom Timing
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -296,28 +292,26 @@ export const BreathingSettings = ({
             </div>
             
             {/* Subscription Status / Settings Link */}
-            <button
+            <Button
+              variant="secondary"
               onClick={() => {
                 setOpen(false);
                 navigate('/settings');
               }}
-              className={`w-full py-3 rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
-                isSubscribed
-                  ? 'bg-primary/10 text-primary hover:bg-primary/20'
-                  : 'bg-secondary text-foreground hover:bg-secondary/80'
-              }`}
+              className="w-full h-12 font-medium"
             >
               <Crown className="w-4 h-4" />
               {isSubscribed ? 'Premium Member' : 'Account Settings'}
-            </button>
+            </Button>
 
-            <button
+            <Button
+              variant="destructive"
               onClick={handleSignOut}
-              className="w-full py-3 rounded-xl bg-destructive/10 text-destructive font-medium transition-all duration-200 hover:bg-destructive/20 active:scale-98 flex items-center justify-center gap-2"
+              className="w-full h-12 font-medium"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
-            </button>
+            </Button>
           </div>
         </div>
       </SheetContent>
