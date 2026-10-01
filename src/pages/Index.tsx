@@ -128,14 +128,9 @@ const Index = () => {
         breathCount={breathCount}
         patternName={patternName}
         holdDuration={currentHoldDuration}
+        freeSessionsRemaining={!isSubscribed && !hasReachedFreeLimit ? remainingFreeSessions : 0}
       />
 
-      {/* Free session indicator (only shown before limit reached) */}
-      {!isSubscribed && !hasReachedFreeLimit && (
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 text-xs text-muted-foreground bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
-          {remainingFreeSessions} free session{remainingFreeSessions !== 1 ? 's' : ''} remaining
-        </div>
-      )}
 
       {/* Paywall Modal */}
       <PaywallModal
