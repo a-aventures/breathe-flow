@@ -1,0 +1,1 @@
+Use the shared Button component and global button-surface tokens for app actions, so shape and background-aware shading stay consistent across screens.
