@@ -1,3 +1,9 @@
+/**
+ * BREATH GRADIENTS — the full-screen breathing colors.
+ * Each theme has 6 gradients (top color -> bottom color) used in rotation.
+ * Edit the hsl(hue, saturation%, lightness%) values to adjust a theme globally.
+ * Keep lightness ~50-90% and saturation ~15-35% for a soft, refined look.
+ */
 export interface BreathTheme {
   id: string;
   name: string;

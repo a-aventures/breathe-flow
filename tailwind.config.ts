@@ -13,6 +13,16 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        display: ["var(--font-display)"],
+      },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+      },
+      spacing: {
+        edge: "var(--space-unit)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
