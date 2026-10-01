@@ -138,7 +138,7 @@ export const BreathingSettings = ({
 
       <SheetContent
         side="bottom"
-        className="h-[85vh] rounded-t-3xl bg-card border-foreground/10"
+        className="glass-surface h-[85vh] rounded-t-[2rem] border-t"
       >
         <SheetHeader className="pb-4">
           <SheetTitle className="text-foreground text-xl">Breathing Patterns</SheetTitle>
