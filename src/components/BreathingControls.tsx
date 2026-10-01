@@ -9,6 +9,7 @@ interface BreathingControlsProps {
   breathCount: number;
   patternName: string;
   holdDuration: number;
+  freeSessionsRemaining?: number;
 }
 
 export const BreathingControls = ({
@@ -18,7 +19,9 @@ export const BreathingControls = ({
   breathCount,
   patternName,
   holdDuration,
+  freeSessionsRemaining = 0,
 }: BreathingControlsProps) => {
+
   const [holdCountdown, setHoldCountdown] = useState(0);
 
   useEffect(() => {
