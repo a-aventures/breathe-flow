@@ -126,14 +126,10 @@
     backdrop-filter: blur(32px) saturate(180%) brightness(0.8);
   }
 
-  /* Debossed text: translucent fill + soft light edge below, faint dark edge above,
-     so the type looks pressed into the gradient rather than printed on it */
+  /* Text over gradients: clean, no artificial edges or halos */
   .breath-text-glow,
   .breath-text-legible {
-    color: hsl(0 0% 100% / 0.58);
-    text-shadow:
-      0 1px 1px hsl(0 0% 100% / 0.12),
-      0 -1px 1px hsl(0 0% 0% / 0.13);
+    color: hsl(0 0% 100% / 0.85);
     -webkit-font-smoothing: antialiased;
   }
 
