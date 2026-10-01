@@ -52,20 +52,20 @@ export const BreathingControls = ({
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-between py-16 px-8 pointer-events-none">
       {/* Top section - pattern name and breath count */}
-      <div className="animate-fade-in-up text-center">
+      <div className="animate-fade-in-up text-center breath-text-legible">
         {isActive ? (
           <>
-            <p className="text-foreground/80 text-lg font-medium tracking-wide mb-1">
+            <p className="text-foreground/90 text-lg font-medium tracking-wide mb-1">
               {patternName}
             </p>
             {breathCount > 0 && (
-              <p className="text-foreground/50 text-sm tracking-widest uppercase">
+              <p className="text-foreground/75 text-sm tracking-widest uppercase">
                 Breath {breathCount}
               </p>
             )}
           </>
         ) : (
-          <p className="text-foreground/60 text-lg font-medium tracking-wide">
+          <p className="text-foreground/80 text-lg font-medium tracking-wide">
             {patternName}
           </p>
         )}
@@ -79,17 +79,17 @@ export const BreathingControls = ({
               {phaseText[phase]}
             </h1>
             {phase === "hold" && holdCountdown > 0 && (
-              <p className="text-6xl md:text-7xl font-light text-foreground/90 mt-4 tabular-nums">
+              <p className="text-foreground text-6xl md:text-7xl font-light mt-4 tabular-nums breath-text-glow">
                 {holdCountdown}
               </p>
             )}
           </div>
         ) : (
-          <div className="text-center">
+          <div className="text-center breath-text-legible">
             <h1 className="text-3xl md:text-4xl font-light tracking-wide text-foreground mb-2">
               Breathwork
             </h1>
-            <p className="text-foreground/50 text-lg">
+            <p className="text-foreground/75 text-lg">
               Find your calm
             </p>
           </div>
@@ -112,7 +112,7 @@ export const BreathingControls = ({
         </Button>
 
         {!isActive && (
-          <p className="text-foreground/40 text-sm mt-4 text-center">
+          <p className="text-foreground/65 text-sm mt-4 text-center breath-text-legible">
             Tap to begin
           </p>
         )}
