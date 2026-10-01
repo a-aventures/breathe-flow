@@ -46,9 +46,9 @@
     --ring: 180 50% 60%;               /* focus outline */
 
     /* ---------- 4. TYPOGRAPHY ---------- */
-    --font-sans: 'Inter', system-ui, sans-serif;      /* body text */
-    --font-display: 'Inter', system-ui, sans-serif;   /* headings, pattern name */
-    --font-weight-display: 300;                       /* heading thickness */
+    --font-sans: 'Karla', system-ui, sans-serif;             /* body text */
+    --font-display: 'Cormorant Garamond', serif;             /* headings, pattern name */
+    --font-weight-display: 400;                              /* heading thickness */
     --letter-spacing-display: 0.02em;
 
     /* ---------- 5. SHAPE & SPACING ---------- */

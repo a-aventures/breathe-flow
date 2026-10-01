@@ -9,7 +9,7 @@ export interface FontPair {
   displayWeight: string;   // heading thickness that suits this pairing
 }
 
-export const DEFAULT_FONT_PAIR_ID = "default";
+export const DEFAULT_FONT_PAIR_ID = "cormorant-karla";
 
 export const FONT_PAIRS: FontPair[] = [
   {
