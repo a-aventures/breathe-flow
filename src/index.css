@@ -130,10 +130,10 @@
      so the type looks pressed into the gradient rather than printed on it */
   .breath-text-glow,
   .breath-text-legible {
-    color: hsl(0 0% 100% / 0.55);
+    color: hsl(0 0% 100% / 0.58);
     text-shadow:
-      0 1px 1px hsl(0 0% 100% / 0.18),
-      0 -1px 1px hsl(0 0% 0% / 0.22);
+      0 1px 1px hsl(0 0% 100% / 0.12),
+      0 -1px 1px hsl(0 0% 0% / 0.13);
     -webkit-font-smoothing: antialiased;
   }
 
