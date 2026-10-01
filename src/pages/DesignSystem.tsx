@@ -11,6 +11,7 @@ import { BreathingControls } from "@/components/BreathingControls";
 import { BreathingSettings } from "@/components/BreathingSettings";
 import { BreathingVisual } from "@/components/BreathingVisual";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
+import { useFontPair } from "@/hooks/use-font-pair";
 
 const TOKENS = [
   "background", "foreground", "card", "card-foreground", "primary", "primary-foreground",
@@ -24,6 +25,64 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
     {children}
   </section>
 );
+
+const TypographyPicker = () => {
+  const { fontPairId, fontPairs, setFontPairId, fontPair } = useFontPair();
+
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        {fontPairs.map((pair) => (
+          <button
+            key={pair.id}
+            type="button"
+            onClick={() => setFontPairId(pair.id)}
+            className={`rounded-2xl border p-5 text-left transition-colors ${
+              fontPairId === pair.id
+                ? "border-primary bg-primary/5"
+                : "border-border hover:border-muted-foreground/40"
+            }`}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-sm font-medium text-foreground">{pair.name}</span>
+              {fontPairId === pair.id && <span className="text-xs text-primary">Active</span>}
+            </div>
+            {/* Sample rendered in this pairing's own fonts */}
+            <p
+              className="text-4xl leading-tight text-foreground"
+              style={{ fontFamily: pair.displayFont, fontWeight: pair.displayWeight }}
+            >
+              Breathe in
+            </p>
+            <p
+              className="mt-1 text-xl text-foreground/90"
+              style={{ fontFamily: pair.displayFont, fontWeight: pair.displayWeight }}
+            >
+              Box Breathing · 4-4-4-4
+            </p>
+            <p
+              className="mt-2 text-sm text-foreground/80"
+              style={{ fontFamily: pair.bodyFont }}
+            >
+              Body text for descriptions and settings.
+            </p>
+            <p
+              className="mt-1 text-xs text-muted-foreground"
+              style={{ fontFamily: pair.bodyFont }}
+            >
+              Muted helper text — {pair.displayFontName} / {pair.bodyFontName}
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{pair.description}</p>
+          </button>
+        ))}
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Applied everywhere: headings in <span className="text-foreground">{fontPair.displayFontName}</span>, body in{" "}
+        <span className="text-foreground">{fontPair.bodyFontName}</span>.
+      </p>
+    </div>
+  );
+};
 
 const DesignSystem = () => {
   const [phase, setPhase] = useState<"inhale" | "exhale" | "hold">("inhale");
@@ -97,14 +156,10 @@ const DesignSystem = () => {
 
 
         <Section title="Typography">
-          <Card>
-            <CardContent className="space-y-3 pt-6">
-              <p className="text-5xl font-light breath-text-glow">Breathe in</p>
-              <p className="text-2xl font-light">Box Breathing</p>
-              <p className="text-base">Body text for descriptions and settings.</p>
-              <p className="text-sm text-muted-foreground">Muted helper text</p>
-            </CardContent>
-          </Card>
+          <p className="text-sm text-muted-foreground">
+            Pick a pairing to apply it across the whole app — previewed live below. Your choice is remembered.
+          </p>
+          <TypographyPicker />
         </Section>
 
         <Section title="Buttons & badges">
