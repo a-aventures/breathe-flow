@@ -1,5 +1,6 @@
 import { Play, Pause } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface BreathingControlsProps {
   isActive: boolean;
@@ -97,18 +98,18 @@ export const BreathingControls = ({
 
       {/* Bottom - controls */}
       <div className="pointer-events-auto">
-        <button
+        <Button
           onClick={onToggle}
-          className="group relative flex items-center justify-center w-20 h-20 rounded-full bg-foreground/10 backdrop-blur-md border border-foreground/20 transition-all duration-300 hover:bg-foreground/20 hover:scale-105 active:scale-95"
+          size="icon"
+          className="w-20 h-20 border-foreground/40 transition-transform duration-300 hover:scale-105 active:scale-95"
           aria-label={isActive ? "Pause" : "Start"}
         >
-          <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           {isActive ? (
             <Pause className="w-8 h-8 text-foreground" />
           ) : (
             <Play className="w-8 h-8 text-foreground ml-1" />
           )}
-        </button>
+        </Button>
 
         {!isActive && (
           <p className="text-foreground/40 text-sm mt-4 text-center">
