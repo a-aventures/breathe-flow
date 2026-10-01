@@ -95,7 +95,13 @@ export const BreathingControls = ({
             <p className="text-foreground/75 text-lg">
               Find your calm
             </p>
+            {freeSessionsRemaining > 0 && (
+              <p className="mt-3 inline-block text-xs text-foreground/70 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full breath-text-legible">
+                {freeSessionsRemaining} free session{freeSessionsRemaining !== 1 ? 's' : ''} remaining
+              </p>
+            )}
           </div>
+
         )}
       </div>
 
