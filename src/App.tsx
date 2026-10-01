@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
 import { BreathThemeProvider } from "@/hooks/use-breath-theme";
+import { FontPairProvider } from "@/hooks/use-font-pair";
 import Index from "./pages/Index";
 import SignIn from "./pages/SignIn";
 import Settings from "./pages/Settings";
@@ -36,7 +37,8 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <SubscriptionProvider>
-       <BreathThemeProvider>
+       <FontPairProvider>
+        <BreathThemeProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -65,7 +67,8 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
-       </BreathThemeProvider>
+        </BreathThemeProvider>
+       </FontPairProvider>
       </SubscriptionProvider>
     </AuthProvider>
   </QueryClientProvider>
