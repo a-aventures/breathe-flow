@@ -110,7 +110,7 @@ export const BreathingControls = ({
         <Button
           onClick={onToggle}
           size="icon"
-          className="w-20 h-20 border-foreground/40 transition-transform duration-300 hover:scale-105 active:scale-95"
+          className="button-clear w-20 h-20 border-foreground/40 transition-transform duration-300 hover:scale-105 active:scale-95"
           aria-label={isActive ? "Pause" : "Start"}
         >
           {isActive ? (
