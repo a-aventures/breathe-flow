@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Settings, Check, LogOut, Crown } from "lucide-react";
+import { Menu, Check, LogOut, Crown } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Slider } from "@/components/ui/slider";
 import { useAuth } from "@/contexts/AuthContext";
@@ -130,9 +130,9 @@ export const BreathingSettings = ({
         <Button
           size="icon"
           className="absolute top-6 right-6 z-50 h-11 w-11 border-foreground/40"
-          aria-label="Settings"
+          aria-label="Menu"
         >
-          <Settings className="w-5 h-5 text-foreground" />
+          <Menu className="w-5 h-5 text-foreground" />
         </Button>
       </SheetTrigger>
 
