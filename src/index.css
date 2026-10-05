@@ -152,8 +152,8 @@
 
 
   .glass-surface {
-    -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(0.92);
-    backdrop-filter: blur(28px) saturate(160%) brightness(0.92);
+    -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(0.78);
+    backdrop-filter: blur(28px) saturate(160%) brightness(0.78);
   }
 
   /* Text over gradients: clean, no artificial edges or halos */
