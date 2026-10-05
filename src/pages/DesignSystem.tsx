@@ -71,7 +71,7 @@ const DesignSystem = () => {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
             {theme.gradients.map((g, i) => (
               <div key={i} className="space-y-2">
-                <div className={`h-40 overflow-hidden rounded-lg ${theme.texture === "watercolor" ? "watercolor-wash" : ""}`} style={{ background: g }} />
+                <div className="h-40 overflow-hidden rounded-lg" style={{ background: theme.washImages?.[i] ? `center / cover no-repeat url("${theme.washImages[i]}")` : g }} />
                 <p className="text-xs text-muted-foreground">{theme.gradientNames[i]}</p>
               </div>
             ))}
