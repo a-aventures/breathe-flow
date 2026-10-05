@@ -120,11 +120,13 @@ export const BreathingControls = ({
           )}
         </Button>
 
-        {!isActive && (
-          <p className="text-foreground/65 text-sm mt-4 text-center breath-text-legible">
-            Tap to begin
-          </p>
-        )}
+        <p
+          className={`text-foreground/65 text-sm mt-4 text-center breath-text-legible transition-opacity duration-500 ${
+            !isActive ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          Tap to begin
+        </p>
       </div>
     </div>
   );
