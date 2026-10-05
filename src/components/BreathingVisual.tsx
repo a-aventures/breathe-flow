@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
 import { getTheme } from "@/lib/breath-themes";
+import { cn } from "@/lib/utils";
 
 interface BreathingVisualProps {
   isActive: boolean;
@@ -27,7 +28,9 @@ export const BreathingVisual = ({
   themeId,
 }: BreathingVisualProps) => {
   const { theme } = useBreathTheme();
-  const gradients = themeId ? getTheme(themeId).gradients : theme.gradients;
+  const selectedTheme = themeId ? getTheme(themeId) : theme;
+  const gradients = selectedTheme.gradients;
+  const textured = selectedTheme.texture === "watercolor";
 
   const [phase, setPhase] = useState<Phase>("inhale");
   const [foregroundColorIndex, setForegroundColorIndex] = useState(0);
@@ -85,12 +88,12 @@ export const BreathingVisual = ({
         
         // Change foreground color when transitioning to inhale (foreground is hidden at 0%)
         if (nextPhase === "inhale" && (phase === "exhale" || phase === "holdOut")) {
-          setForegroundColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
+          setForegroundColorIndex((prev) => (prev + 1) % gradients.length);
         }
         
         // Change background color when transitioning to exhale (background is hidden at 100% fill)
         if (nextPhase === "exhale" && (phase === "inhale" || phase === "holdIn")) {
-          setBackgroundColorIndex((prev) => (prev + 1) % BREATH_GRADIENTS.length);
+          setBackgroundColorIndex((prev) => (prev + 1) % gradients.length);
         }
 
         setPhase(nextPhase);
@@ -137,7 +140,7 @@ export const BreathingVisual = ({
     <div className="fixed inset-0 w-full h-full overflow-hidden">
       {/* Background - revealed as exhale drains the fill */}
       <div
-        className="absolute inset-0 w-full h-full"
+        className={cn("absolute inset-0 w-full h-full", textured && "watercolor-wash")}
         style={{
           background: backgroundGradient,
         }}
@@ -145,7 +148,7 @@ export const BreathingVisual = ({
 
       {/* Foreground fill - fills from bottom to top on inhale */}
       <div
-        className="absolute left-0 right-0 bottom-0 w-full"
+        className={cn("absolute left-0 right-0 bottom-0 w-full", textured && "watercolor-wash")}
         style={{
           height: `${fillPercent}%`,
           background: foregroundGradient,

@@ -10,9 +10,25 @@ export interface BreathTheme {
   description: string;
   gradients: string[];
   gradientNames: string[];
+  texture?: "watercolor";
 }
 
 export const BREATH_THEMES: BreathTheme[] = [
+  {
+    id: "watercolor-paper",
+    name: "Watercolor Paper",
+    description: "Soft washes with the texture of pigment on paper.",
+    texture: "watercolor",
+    gradients: [
+      "linear-gradient(160deg, hsl(204, 28%, 57%) 0%, hsl(213, 27%, 39%) 100%)",
+      "linear-gradient(160deg, hsl(174, 25%, 55%) 0%, hsl(185, 24%, 38%) 100%)",
+      "linear-gradient(160deg, hsl(268, 23%, 58%) 0%, hsl(278, 22%, 40%) 100%)",
+      "linear-gradient(160deg, hsl(341, 26%, 59%) 0%, hsl(350, 25%, 41%) 100%)",
+      "linear-gradient(160deg, hsl(32, 29%, 58%) 0%, hsl(20, 27%, 39%) 100%)",
+      "linear-gradient(160deg, hsl(144, 23%, 54%) 0%, hsl(155, 23%, 37%) 100%)",
+    ],
+    gradientNames: ["Washed blue", "Sea glass", "Heather", "Rose pigment", "Ochre", "Sage"],
+  },
   {
     id: "nordic-mineral",
     name: "Nordic Mineral",

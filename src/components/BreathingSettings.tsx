@@ -150,23 +150,24 @@ export const BreathingSettings = ({
             <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
               From "Breath" by James Nestor
             </h3>
-            <div className="space-y-2">
+            <div className="divide-y divide-foreground/10">
               {BREATH_PATTERNS.map((pattern) => (
                 <Button
-                  variant={isPatternActive(pattern) ? "default" : "secondary"}
+                  variant="editorial"
                   key={pattern.name}
                   onClick={() => handlePatternSelect(pattern)}
-                  className="w-full h-auto min-h-16 px-5 py-3 text-left whitespace-normal"
+                  aria-pressed={isPatternActive(pattern)}
+                  className="w-full h-auto min-h-16 px-0 py-4 text-left whitespace-normal justify-start"
                 >
                   <div className="flex w-full items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="font-medium text-foreground">{pattern.name}</p>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="font-display text-xl text-foreground">{pattern.name}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5 font-normal">
                         {pattern.description}
                       </p>
                     </div>
                     {isPatternActive(pattern) && (
-                      <Check className="w-5 h-5 text-foreground shrink-0" />
+                      <Check className="w-4 h-4 text-foreground shrink-0" />
                     )}
                   </div>
                 </Button>
@@ -179,26 +180,27 @@ export const BreathingSettings = ({
             <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
               Visual Theme
             </h3>
-            <div className="space-y-2">
+            <div className="divide-y divide-foreground/10">
               {themes.map((t) => (
                 <Button
-                  variant={themeId === t.id ? "default" : "secondary"}
+                  variant="editorial"
                   key={t.id}
                   onClick={() => setThemeId(t.id)}
-                  className="w-full h-auto px-5 py-4 text-left whitespace-normal flex-col items-stretch"
+                  aria-pressed={themeId === t.id}
+                  className="w-full h-auto px-0 py-4 text-left whitespace-normal flex-col items-stretch"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="font-medium text-foreground">{t.name}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
+                      <p className="font-display text-xl text-foreground">{t.name}</p>
+                      <p className="text-sm text-muted-foreground mt-0.5 font-normal">{t.description}</p>
                     </div>
-                    {themeId === t.id && <Check className="w-5 h-5 text-foreground shrink-0" />}
+                    {themeId === t.id && <Check className="w-4 h-4 text-foreground shrink-0" />}
                   </div>
-                  <div className="mt-1 flex gap-1.5">
+                  <div className="mt-2 flex gap-1.5">
                     {t.gradients.map((g, i) => (
                       <div
                         key={i}
-                        className="h-6 flex-1 rounded-md"
+                        className={`h-5 flex-1 overflow-hidden rounded-sm ${t.texture === "watercolor" ? "watercolor-wash" : ""}`}
                         style={{ background: g }}
                       />
                     ))}
@@ -293,21 +295,21 @@ export const BreathingSettings = ({
             
             {/* Subscription Status / Settings Link */}
             <Button
-              variant="secondary"
+              variant="editorial"
               onClick={() => {
                 setOpen(false);
                 navigate('/settings');
               }}
-              className="w-full h-12 font-medium"
+              className="w-full h-12 px-0 justify-start border-b border-foreground/10"
             >
               <Crown className="w-4 h-4" />
               {isSubscribed ? 'Premium Member' : 'Account Settings'}
             </Button>
 
             <Button
-              variant="destructive"
+              variant="editorial"
               onClick={handleSignOut}
-              className="w-full h-12 font-medium"
+              className="w-full h-12 px-0 justify-start text-destructive"
             >
               <LogOut className="w-4 h-4" />
               Sign Out
