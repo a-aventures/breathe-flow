@@ -12,6 +12,7 @@ import { BreathingSettings } from "@/components/BreathingSettings";
 import { BreathingVisual } from "@/components/BreathingVisual";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
 import { useFontPair } from "@/hooks/use-font-pair";
+import { SettingsListMockups } from "@/components/SettingsListMockups";
 
 const TOKENS = [
   "background", "foreground", "card", "card-foreground", "primary", "primary-foreground",
@@ -111,6 +112,11 @@ const DesignSystem = () => {
               </div>
             ))}
           </div>
+        </Section>
+
+        <Section title="Settings menu styles (pick one)">
+          <p className="text-sm text-muted-foreground">Tap rows to try selecting. Tell me which number you like and I'll apply it to the real menu.</p>
+          <SettingsListMockups />
         </Section>
 
         <Section title="Breath gradients">
