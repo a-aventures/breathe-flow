@@ -15,6 +15,7 @@ const buttonVariants = cva(
         secondary: "border-foreground/20",
         ghost: "border-transparent",
         link: "border-transparent underline-offset-4 hover:underline",
+        editorial: "editorial-action rounded-none border-0",
       },
       size: {
         default: "h-10 px-4 py-2",
