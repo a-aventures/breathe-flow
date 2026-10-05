@@ -1,0 +1,3 @@
+- [ ] Apply editorial hairline rows to the breathing settings menu.
+- [ ] Remove settings menu mockups and typography options from the design system page.
+- [ ] Add and verify a watercolor-paper visual theme for the full-screen breathing visuals.
