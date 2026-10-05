@@ -114,9 +114,9 @@ export const BreathingControls = ({
           aria-label={isActive ? "Pause" : "Start"}
         >
           {isActive ? (
-            <Pause className="w-8 h-8 text-foreground" />
+            <Pause className="w-8 h-8 text-foreground/90 fill-current" />
           ) : (
-            <Play className="w-8 h-8 text-foreground ml-1" />
+            <Play className="w-8 h-8 text-foreground/90 fill-current ml-1" />
           )}
         </Button>
 
