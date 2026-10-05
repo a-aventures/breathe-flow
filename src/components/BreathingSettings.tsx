@@ -132,7 +132,7 @@ export const BreathingSettings = ({
           className="button-clear absolute top-6 right-6 z-50 h-11 w-11 border-foreground/40"
           aria-label="Menu"
         >
-          <Menu className="w-5 h-5 text-foreground/80" />
+          <Menu className="w-5 h-5 text-foreground/80 icon-deboss" />
         </Button>
       </SheetTrigger>
 
