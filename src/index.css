@@ -166,6 +166,11 @@
   .breath-overlay {
     backdrop-filter: blur(2px);
   }
+
+  /* Subtle deboss for white overlay icons: faint light edge below, faint dark edge above */
+  .icon-deboss {
+    filter: drop-shadow(0 1px 1px hsl(0 0% 100% / 0.12)) drop-shadow(0 -1px 1px hsl(0 0% 0% / 0.14));
+  }
 }
 
 /* Smooth breathing animation curves */
