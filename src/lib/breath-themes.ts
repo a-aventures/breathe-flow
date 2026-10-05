@@ -90,4 +90,4 @@ export const BREATH_THEMES: BreathTheme[] = [
 export const DEFAULT_THEME_ID = "nordic-mineral";
 
 export const getTheme = (id: string): BreathTheme =>
-  BREATH_THEMES.find((t) => t.id === id) ?? BREATH_THEMES[0];
+  BREATH_THEMES.find((t) => t.id === id) ?? BREATH_THEMES.find((t) => t.id === DEFAULT_THEME_ID) ?? BREATH_THEMES[0];
