@@ -134,20 +134,6 @@
   .button-surface.editorial-action:hover { opacity: 0.8; }
   .button-surface.editorial-action:active { transform: none; opacity: 0.65; }
 
-  /* Pigment granulation and uneven paper absorption over each watercolor wash. */
-  .watercolor-wash { position: relative; isolation: isolate; }
-  .watercolor-wash::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url('./assets/watercolor-paper.jpg');
-    background-size: cover;
-    background-position: center;
-    mix-blend-mode: multiply;
-    opacity: 0.32;
-  }
-
   .glass-surface {
     -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(0.8);
     backdrop-filter: blur(32px) saturate(180%) brightness(0.8);

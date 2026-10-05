@@ -1,3 +1,4 @@
 - [x] Apply editorial hairline rows to the breathing settings menu.
 - [x] Remove settings menu mockups and typography options from the design system page.
 - [x] Add and verify a watercolor-paper visual theme for the full-screen breathing visuals.
+- [x] Preserve the rise-and-drain movement for watercolor while making each color a distinct, imperfect painted wash.

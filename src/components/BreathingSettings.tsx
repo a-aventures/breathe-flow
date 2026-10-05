@@ -200,8 +200,8 @@ export const BreathingSettings = ({
                     {t.gradients.map((g, i) => (
                       <div
                         key={i}
-                        className={`h-5 flex-1 overflow-hidden rounded-sm ${t.texture === "watercolor" ? "watercolor-wash" : ""}`}
-                        style={{ background: g }}
+                        className="h-5 flex-1 overflow-hidden rounded-sm"
+                        style={{ background: t.washImages?.[i] ? `center / cover no-repeat url("${t.washImages[i]}")` : g }}
                       />
                     ))}
                   </div>

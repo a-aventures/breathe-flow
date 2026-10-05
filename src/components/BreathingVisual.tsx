@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useBreathTheme } from "@/hooks/use-breath-theme";
 import { getTheme } from "@/lib/breath-themes";
-import { cn } from "@/lib/utils";
 
 interface BreathingVisualProps {
   isActive: boolean;
@@ -30,7 +29,7 @@ export const BreathingVisual = ({
   const { theme } = useBreathTheme();
   const selectedTheme = themeId ? getTheme(themeId) : theme;
   const gradients = selectedTheme.gradients;
-  const textured = selectedTheme.texture === "watercolor";
+  const washImages = selectedTheme.washImages;
 
   const [phase, setPhase] = useState<Phase>("inhale");
   const [foregroundColorIndex, setForegroundColorIndex] = useState(0);
@@ -40,6 +39,8 @@ export const BreathingVisual = ({
 
   const foregroundGradient = gradients[foregroundColorIndex % gradients.length];
   const backgroundGradient = gradients[backgroundColorIndex % gradients.length];
+  const foregroundWash = washImages?.[foregroundColorIndex % washImages.length];
+  const backgroundWash = washImages?.[backgroundColorIndex % washImages.length];
 
   useEffect(() => {
     if (!isActive) {
@@ -138,18 +139,21 @@ export const BreathingVisual = ({
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden">
-      {/* Background - revealed as exhale drains the fill */}
+      {/* The next painted sheet is already underneath; the current one uncovers it on exhale. */}
       <div
-        className={cn("absolute inset-0 w-full h-full", textured && "watercolor-wash")}
+        className="absolute inset-0 w-full h-full"
         style={{
-          background: backgroundGradient,
+          background: backgroundWash ? `center / cover no-repeat url("${backgroundWash}")` : backgroundGradient,
         }}
       />
 
-      {/* Foreground fill - fills from bottom to top on inhale */}
+      {/* Keep watercolor paper full-height while revealing it, so its pigment never stretches. */}
       <div
-        className={cn("absolute left-0 right-0 bottom-0 w-full", textured && "watercolor-wash")}
-        style={{
+        className={washImages ? "absolute inset-0 w-full h-full" : "absolute left-0 right-0 bottom-0 w-full"}
+        style={foregroundWash ? {
+          background: `center / cover no-repeat url("${foregroundWash}")`,
+          clipPath: `inset(${100 - fillPercent}% 0 0 0)`,
+        } : {
           height: `${fillPercent}%`,
           background: foregroundGradient,
         }}

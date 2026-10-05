@@ -1,3 +1,10 @@
+import washedBlue from "@/assets/watercolor-washes/washed-blue.jpg";
+import seaGlass from "@/assets/watercolor-washes/sea-glass.jpg";
+import heather from "@/assets/watercolor-washes/heather.jpg";
+import rosePigment from "@/assets/watercolor-washes/rose-pigment.jpg";
+import ochre from "@/assets/watercolor-washes/ochre.jpg";
+import sage from "@/assets/watercolor-washes/sage.jpg";
+
 /**
  * BREATH GRADIENTS — the full-screen breathing colors.
  * Each theme has 6 gradients (top color -> bottom color) used in rotation.
@@ -11,6 +18,7 @@ export interface BreathTheme {
   gradients: string[];
   gradientNames: string[];
   texture?: "watercolor";
+  washImages?: string[];
 }
 
 export const BREATH_THEMES: BreathTheme[] = [
@@ -19,6 +27,7 @@ export const BREATH_THEMES: BreathTheme[] = [
     name: "Watercolor Paper",
     description: "Soft washes with the texture of pigment on paper.",
     texture: "watercolor",
+    washImages: [washedBlue, seaGlass, heather, rosePigment, ochre, sage],
     gradients: [
       "linear-gradient(160deg, hsl(204, 28%, 57%) 0%, hsl(213, 27%, 39%) 100%)",
       "linear-gradient(160deg, hsl(174, 25%, 55%) 0%, hsl(185, 24%, 38%) 100%)",
